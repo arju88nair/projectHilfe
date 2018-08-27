@@ -1,0 +1,188 @@
+body {
+    font-family: 'Fjalla One', sans-serif !important;
+}
+.navbar-laravel{
+    background: #22184c;
+}
+.navbar-light .navbar-brand{
+    color :white;
+    font-weight: bolder;
+}
+.navbar-light .navbar-nav .nav-link{
+    color:white!important;
+}
+.image--cover {
+    height: 219px;
+    width: 219px;
+    border-radius: 200px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    object-fit: cover;
+    object-position: center right;
+    margin-left: -14%;
+    margin-top: -8px;
+
+}
+.rectangular-card{
+    height: 50px;
+    width: 100px;
+    background-color: #555;
+}
+.rectangle{
+    display: block;
+    height: 200px;
+    margin-left: 6%;
+    background: ghostwhite;
+    border-radius: 25px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 3px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    position: relative;
+}
+
+.circle{
+    position: absolute;
+    /*height: 210px;*/
+    /*width: 210px;*/
+    /*border-radius: 200px;*/
+    /*border: 3px solid white;*/
+    left: -5%;
+    top: -1px;
+    z-index: 1;
+    /*box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);*/
+}
+
+.fa-plus-circle{
+    z-index: 1;
+    border-radius: 50%;
+    height: 100%;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    font-size: 250%;
+    background: white;
+}
+.card-body.d-flex.justify-content-center{
+    background: #DBDBDC;
+}
+.badgeContent{
+    height: 100%;
+}
+.badgeContentFirst span{
+    font-size: 135%;
+    color: #666;
+}
+.badgeContent div{
+    margin-top: 6%;
+}
+i.fab.fa-github{
+    font-size: 200%;
+    margin-left: 11%;
+    vertical-align: middle;
+}
+i.fas.fa-location-arrow{
+    font-size: 100%;
+    margin-left: 6%;
+    color: #666;
+}
+i.fab fa-git-square{
+    font-size: 100%;
+    margin-left: 6%;
+    color: #666;
+}
+.bio{
+    color: #666;
+}
+
+.fa-github:hover {
+    color: black;
+}
+.badgeContentSecond span{
+    font-size: 115%;
+    color: #666;
+}
+
+/*Loader*/
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 48%;
+}
+
+.line {
+    animation: expand 1s ease-in-out infinite;
+    border-radius: 10px;
+    display: inline-block;
+    transform-origin: center center;
+    margin: 0 3px;
+    width: 1px;
+    height: 25px;
+}
+
+.line:nth-child(1) {
+    background: #27ae60;
+}
+
+.line:nth-child(2) {
+    animation-delay: 180ms;
+    background: #f1c40f;
+}
+
+.line:nth-child(3) {
+    animation-delay: 360ms;
+    background: #e67e22;
+}
+
+.line:nth-child(4) {
+    animation-delay: 540ms;
+    background: #2980b9;
+}
+
+@keyframes expand {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(2);
+    }
+}
+
+.loaderCard{
+    background: lightgray;
+    padding: 5rem !important;
+}
+.listLoaderCard{
+    background: lightgray;
+    padding: 15rem !important;
+}
+
+
+/*Tabs*/
+.nav-tabs { border-bottom: 2px solid #DDD; }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+.nav-tabs > li > a { border: none; color: #666; }
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #4285F4 !important; background: transparent; }
+.nav-tabs > li > a::after { content: ""; background: #4285F4; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+.nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+.tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+.tab-pane { padding: 15px 0; }
+.tab-content{padding:20px}
+
+
+/*List*/
+/*.modal-container {*/
+    /*position: relative;*/
+/*}*/
+/*.modal-container .modal, .modal-container .modal-backdrop {*/
+    /*position: absolute;*/
+/*}*/
+
+button:focus{
+    outline: none !important;
+}
+.mataerialList{
+    padding-top: 0% !important;
+    padding-bottom: 0% !important;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    margin-bottom:25px !important;
+}
+
+.addPlus{
+    cursor: pointer
+}
