@@ -63,10 +63,6 @@ class UrlModal extends React.Component {
 
     handleChange = (event) => {
         const url = event.target.value;
-        console.log(this.state)
-        if (this.state.validate) {
-            this.setState({button: true});
-        }
         this.setState({url});
     }
 
@@ -87,8 +83,11 @@ class UrlModal extends React.Component {
 
 
     validatorListener(result) {
-        console.log(result);
-        this.setState({button: false});
+        if(result)
+        {
+            this.setState({button: false});
+
+        }
     }
 
 

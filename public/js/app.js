@@ -92099,10 +92099,6 @@ var UrlModal = function (_React$Component) {
 
         _this.handleChange = function (event) {
             var url = event.target.value;
-            console.log(_this.state);
-            if (_this.state.validate) {
-                _this.setState({ button: true });
-            }
             _this.setState({ url: url });
         };
 
@@ -92137,8 +92133,9 @@ var UrlModal = function (_React$Component) {
     }, {
         key: 'validatorListener',
         value: function validatorListener(result) {
-            console.log(result);
-            this.setState({ button: false });
+            if (result) {
+                this.setState({ button: false });
+            }
         }
     }, {
         key: 'render',
