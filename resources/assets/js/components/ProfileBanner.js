@@ -23,7 +23,6 @@ class ProfileBanner extends Component {
             profile: [],
             isLoading: false,
             open: false,
-            show: false,
 
         };
         this.toggleModal= this.toggleModal.bind(this);
@@ -33,6 +32,8 @@ class ProfileBanner extends Component {
 
 
     handleClose() {
+        console.log("Sdsdds")
+
         this.setState({
             open: !this.state.open
         });
