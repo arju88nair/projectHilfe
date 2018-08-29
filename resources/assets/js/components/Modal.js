@@ -1,140 +1,67 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-
-function getModalStyle() {
-    const top = 50;
-    const left = 50;
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
-
-
-const styles = theme => ({
-    paper: {
-        position: 'absolute',
-        width: theme.spacing.unit * 50,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
-    },
-    input: {
-        margin: theme.spacing.unit,
-        width: theme.spacing.unit * 40
-    },
-    addIcon: {
-        left: '20%',
-        fontSize: '22px'
-
-    },
-});
-
-class UrlModal extends React.Component {
-    constructor(props) {
-        super(props);
+export default class FormDialog extends React.Component {
+    constructor(props, context) {
+        super(props, context);
 
 
         this.state = {
             open: false,
-            user: '',
-            button: true,
-            url: '',
+
+
         };
-        this.handleClose = this.handleClose.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.validatorListener = this.validatorListener.bind(this);
-
-
-    }
-
-    handleClose = () => {
-        this.setState({open: false});
-    };
-
-    handleChange = (event) => {
-        const url = event.target.value;
-        this.setState({url});
-    }
-
-    handleSubmit = () => {
-        this.setState({open: true});
-    };
-
-    componentDidMount() {
-        // custom rule will have name 'isPasswordMatch'
-        ValidatorForm.addValidationRule('isURL', (value) => {
-            if (value.match(/https\:\/\/github\.com/)) {
-                return true;
-            }
-            return false;
-
-        });
+        this.handleClose=this.handleClose.bind(this)
     }
 
 
-    validatorListener(result) {
-        if(result)
-        {
-            this.setState({button: false});
 
-        }
+
+    handleClose() {
+        this.props.handleClose();
     }
-
 
     render() {
-        const {classes} = this.props;
-        const {url} = this.state;
+        const open = this.props.open;
+
         return (
             <div>
-
-                <Modal
-                    aria-labelledby="URL modal"
-                    aria-describedby="Says so in the label"
-                    open={this.props.open}
-                    onClose={this.handleClose}
+                <Dialog
+                    open={open}
+                    onClick={this.handleClose}
+                    aria-labelledby="form-dialog-title"
                 >
-                    <div style={getModalStyle()} className={classes.paper}>
-                        <ValidatorForm
-                            ref="form"
-                            onSubmit={this.handleSubmit}
-                        >
-
-                            <TextValidator
-                                label="Github Repo URL"
-                                onChange={this.handleChange}
-                                name="url"
-                                value={url}
-                                validators={['isURL']}
-                                errorMessages={['Enter github repo url']}
-                                validatorListener={this.validatorListener}
-
-                            />
-                            <Button variant="fab" mini color="primary" aria-label="Add" className={classes.addIcon}
-                                    disabled={this.state.button}>
-                                <Icon className={classes.addIcon}>send</Icon>
-                            </Button>
-                        </ValidatorForm>
-                        <UrlModalWrapped/>
-                    </div>
-
-                </Modal>
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We will send
+                            updates occasionally.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleClose} color="primary">
+                            Subscribe
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }
 }
-
-
-// We need an intermediary variable for handling the recursive nesting.
-const  UrlModalWrapped = withStyles(styles)(UrlModal);
-
-export default UrlModalWrapped;

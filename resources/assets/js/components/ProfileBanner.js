@@ -3,9 +3,14 @@ import '../../../../public/css/login.css';
 import MainTab from './Tabs'
 // import UrlModal from './Modal'
 import ErrorBoundary from './ErrorBoundary'
-import {Modal, Button} from 'react-bootstrap';
-import UrlModal from "./Modal";
-
+import FormDialog from "./Modal";
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 class ProfileBanner extends Component {
 
@@ -13,20 +18,31 @@ class ProfileBanner extends Component {
     constructor(props, context) {
         super(props, context);
 
-        this.handleClick = this.handleClick.bind(this);
 
         this.state = {
             profile: [],
             isLoading: false,
             open: false,
+            show: false,
+
         };
+        this.toggleModal= this.toggleModal.bind(this);
+        this.handleClose= this.handleClose.bind(this);
+
     }
 
 
+    handleClose() {
+        this.setState({
+            open: !this.state.open
+        });
+    }
 
-    handleClick() {
-        this.setState({open: true});
 
+    toggleModal() {
+        this.setState({
+            open: true
+        });
     }
 
     componentDidMount() {
@@ -80,8 +96,9 @@ class ProfileBanner extends Component {
                             </div>
                         </div>
                     </div>
-                    <i className="fas fa-plus-circle addPlus" onClick={this.handleClick}/>
-                        <UrlModal open={this.state.open} user={this.state.profile.login}/>
+                    <i className="fas fa-plus-circle addPlus" onClick={this.toggleModal}/>
+                    <ErrorBoundary>  <FormDialog open={this.state.open} handleClose={this.handleClose} /></ErrorBoundary>
+
                 </div>
                 <div className="d-flex justify-content-center">
 
