@@ -6,6 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Icon from '@material-ui/core/Icon';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 export default class FormDialog extends React.Component {
     constructor(props, context) {
@@ -43,14 +45,26 @@ export default class FormDialog extends React.Component {
                             To subscribe to this website, please enter your email address here. We will send
                             updates occasionally.
                         </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
+                        <ValidatorForm
+                            ref="form"
+                            onSubmit={this.handleSubmit}
+                        >
+
+                            <TextValidator
+                                label="Github Repo URL"
+                                onChange={this.handleChange}
+                                name="url"
+                                value={url}
+                                validators={['isURL']}
+                                errorMessages={['Enter github repo url']}
+                                validatorListener={this.validatorListener}
+
+                            />
+                            <Button variant="fab" mini color="primary" aria-label="Add" className={classes.addIcon}
+                                    disabled={this.state.button}>
+                                <Icon className={classes.addIcon}>send</Icon>
+                            </Button>
+                        </ValidatorForm>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
