@@ -186,3 +186,7 @@ button:focus{
 .addPlus{
     cursor: pointer
 }
+.modalForm{
+    width: 400px !important;
+    padding-right: 18px;
+}

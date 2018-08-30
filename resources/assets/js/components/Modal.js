@@ -77,15 +77,17 @@ export default class FormDialog extends React.Component {
 
         return (
             <div>
-
                 <Dialog
                     open={open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Start creating</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Create your space</DialogTitle>
                     <DialogContent>
-
+                        {/*<DialogContentText>*/}
+                            {/*To subscribe to this website, please enter your email address here. We will send*/}
+                            {/*updates occasionally.*/}
+                        {/*</DialogContentText>*/}
                         <ValidatorForm
                             ref="form"
                             onSubmit={this.handleSubmit}
@@ -98,6 +100,8 @@ export default class FormDialog extends React.Component {
                                 validators={['isURL']}
                                 errorMessages={['Enter github repo url']}
                                 validatorListener={this.validatorListener}
+                                className="modalForm"
+
 
                             />
                             <Button variant="fab" mini color="primary" aria-label="Add"
@@ -106,14 +110,11 @@ export default class FormDialog extends React.Component {
                             </Button>
                         </ValidatorForm>
                     </DialogContent>
-                    {/*<DialogActions>*/}
-                        {/*<Button onClick={this.handleClose} color="primary">*/}
-                            {/*Cancel*/}
-                        {/*</Button>*/}
-                        {/*<Button onClick={this.handleClose} color="primary">*/}
-                            {/*Subscribe*/}
-                        {/*</Button>*/}
-                    {/*</DialogActions>*/}
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                        </Button>
+                    </DialogActions>
                 </Dialog>
 
 

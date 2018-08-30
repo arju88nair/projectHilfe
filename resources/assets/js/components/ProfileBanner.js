@@ -32,7 +32,6 @@ class ProfileBanner extends Component {
 
 
     handleClose() {
-        console.log("Sdsdds")
 
         this.setState({
             open: !this.state.open
