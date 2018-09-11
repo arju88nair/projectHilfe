@@ -57,4 +57,22 @@ class HomeController extends Controller
         return Item::getRepoDetails($request);
 
     }
+    public function login(Request $request)
+    {
+return "d"
+;        $user = $request->user();
+
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+
+        $token->save();
+        return response()->json([
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString()
+        ]);
+    }
+
 }
