@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Loader from './loader'
 import Star from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -60,14 +61,7 @@ class repoList extends Component {
 
     render() {
         if (this.state.isListLoading) {
-            return <div className="listLoaderCard">
-                <div className="loader">
-                    <div className="line"/>
-                    <div className="line"/>
-                    <div className="line"/>
-                    <div className="line"/>
-                </div>
-            </div>;
+            return Loader
         }
         else {
 

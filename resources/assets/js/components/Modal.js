@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{Component} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,12 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
+import axios from 'axios';
 import Icon from '@material-ui/core/Icon';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
-export default class FormDialog extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+export default class FormDialog extends Component {
+    constructor(props) {
+        super(props);
 
 
         this.state = {
@@ -22,9 +23,10 @@ export default class FormDialog extends React.Component {
 
 
         };
-        this.handleClose=this.handleClose.bind(this)
-        this.handleChange=this.handleChange.bind(this)
-        this.validatorListener=this.validatorListener.bind(this)
+        this.handleClose=this.handleClose.bind(this);
+        this.handleChange=this.handleChange.bind(this);
+        this.validatorListener=this.validatorListener.bind(this);
+        this.handleSubmit=this.handleSubmit.bind(this);
     }
 
 
@@ -39,12 +41,19 @@ export default class FormDialog extends React.Component {
     };
 
 
+    handleSubmit=event=>
+    {
+        let URL='api/getRepoDetails';
+        let git=this.state.url;
+        axios.post(URL, { git })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            })
 
 
+}
 
-    // handleSubmit = () => {
-    //     this.setState({open: true});
-    // };
 
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
@@ -90,7 +99,7 @@ export default class FormDialog extends React.Component {
                         {/*</DialogContentText>*/}
                         <ValidatorForm
                             ref="form"
-                            onSubmit={this.handleSubmit}
+                            // onSubmit={this.handleSubmit}
                         >
                             <TextValidator
                                 label="Github Repo URL"
@@ -105,7 +114,7 @@ export default class FormDialog extends React.Component {
 
                             />
                             <Button variant="fab" mini color="primary" aria-label="Add"
-                                    disabled={this.state.button}>
+                                    disabled={this.state.button} onClick={this.handleSubmit} >
                                 <Icon >send</Icon>
                             </Button>
                         </ValidatorForm>

@@ -5,19 +5,34 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Models\Home;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class apiController extends Controller
 {
 
     public function getRepoDetails(Request $request)
     {
-        return "dd";
+        $request = parse_url($request['git']);
+        $path = $request["path"];
+        $parsedDetails = rtrim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $path), '/');
+        $client = new Client(); //GuzzleHttp\Client        $url='https://api.github.com/repos'.$parsedDetails;
+        $url='https://api.github.com/repos'.$parsedDetails;
+        $result = $client->get($url);
+        if($result->getStatusCode() != 200)
+        {
+            return array('code'=>500,'message'=>'Wrong URL');
+        };
+;
+
+
+
         return Item::getRepoDetails($request);
 
     }
     public function login(Request $request)
     {
-              $user = $request->user();
+        $user = $request->user();
 
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;

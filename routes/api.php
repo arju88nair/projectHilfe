@@ -20,5 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login1', 'HomeController@login');
 Route::get('getHomeRepos', 'HomeController@getHomeRepos');
 Route::get('addRepo', 'HomeController@addRepo');
-Route::get('getRepoDetails', 'apiController@login');
+Route::post('getRepoDetails', 'apiController@getRepoDetails');
 

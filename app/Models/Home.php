@@ -16,7 +16,6 @@ class Home extends Model
     public static function index()
     {
         $user = Auth::user();
-        return $user->createToken('MyApp')-> accessToken;
         $items = Item::all();
         return view('home', ['items' => $items,'nickname'=> Auth::user()->nickname]);
 
