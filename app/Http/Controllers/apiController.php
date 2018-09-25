@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Home;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class apiController extends Controller
 {
@@ -22,7 +23,13 @@ class apiController extends Controller
         if($result->getStatusCode() != 200)
         {
             return array('code'=>500,'message'=>'Wrong URL');
-        };
+        }
+        else{
+
+            return array('code'=>200,'message'=>'Success');
+
+        }
+        ;
 ;
 
 

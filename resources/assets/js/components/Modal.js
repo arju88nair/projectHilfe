@@ -47,8 +47,15 @@ export default class FormDialog extends Component {
         let git=this.state.url;
         axios.post(URL, { git })
             .then(res => {
-                console.log(res);
-                console.log(res.data);
+                if(res.data.code === 200)
+                {
+
+                }
+                else {
+
+                }
+                console.log(res['code']);
+                console.log(res.data.code);
             })
 
 
