@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Repo;
 use Illuminate\Http\Request;
 use App\Models\Home;
 use GuzzleHttp\Exception\GuzzleException;
@@ -26,15 +26,15 @@ class apiController extends Controller
         }
         else{
 
-            return array('code'=>200,'message'=>'Success');
+            $repo= new Repo();
+            $repo->url= $url;
+            $repo->save();
+            return $repo;
+            return array('code'=>200,'message'=>'Success','repo'=>$repo);
 
         }
-        ;
-;
 
-
-
-        return Item::getRepoDetails($request);
+        return Repo::getRepoDetails($request);
 
     }
     public function login(Request $request)

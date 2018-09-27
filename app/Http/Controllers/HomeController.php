@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Repo;
 use Illuminate\Http\Request;
 use App\Models\Home;
 
@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     public function getTopRepos()
     {
-        return Item::all();
+        return Repo::all();
     }
 
 
@@ -54,7 +54,7 @@ class HomeController extends Controller
     public function getRepoDetails(Request $request)
     {
         return "dd";
-        return Item::getRepoDetails($request);
+        return Repo::getRepoDetails($request);
 
     }
     public function login(Request $request)

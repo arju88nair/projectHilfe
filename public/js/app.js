@@ -71912,14 +71912,13 @@ var repoList = function (_Component) {
     _createClass(repoList, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-
             this.callURL();
         }
     }, {
         key: 'render',
         value: function render() {
             if (this.state.isListLoading) {
-                return __WEBPACK_IMPORTED_MODULE_7__loader__["a" /* default */];
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__loader__["a" /* default */], null);
             } else {
                 var classes = this.props.classes;
 
@@ -73295,9 +73294,18 @@ var FormDialog = function (_Component) {
             var URL = 'api/getRepoDetails';
             var git = _this.state.url;
             __WEBPACK_IMPORTED_MODULE_8_axios___default.a.post(URL, { git: git }).then(function (res) {
-                if (res.data.code === 200) {} else {}
+                if (res.data.code === 200) {
+                    alert("SDsdd");
+                } else {
+                    alert("Noooooo");
+                }
                 console.log(res['code']);
                 console.log(res.data.code);
+            }).catch(function (err) {
+                _this.setState({ apiError: false });
+                console.log(_this.state);
+                _this.validatorListener(false);
+                console.log(err);
             });
         };
 
@@ -73305,7 +73313,8 @@ var FormDialog = function (_Component) {
             open: false,
 
             url: '',
-            button: true
+            button: true,
+            apiError: true
 
         };
         _this.handleClose = _this.handleClose.bind(_this);
@@ -73323,11 +73332,14 @@ var FormDialog = function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this2 = this;
+
             // custom rule will have name 'isPasswordMatch'
             __WEBPACK_IMPORTED_MODULE_10_react_material_ui_form_validator__["ValidatorForm"].addValidationRule('isURL', function (value) {
-                if (value.match(/https\:\/\/github\.com/)) {
+                if (value.match(/https\:\/\/github\.com/) || _this2.state.apiError) {
                     return true;
                 }
+
                 return false;
             });
         }
@@ -73343,6 +73355,8 @@ var FormDialog = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var open = this.props.open;
             var url = this.state.url;
 
@@ -73368,8 +73382,8 @@ var FormDialog = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_10_react_material_ui_form_validator__["ValidatorForm"],
                             {
-                                ref: 'form'
-                                // onSubmit={this.handleSubmit}
+                                ref: 'form',
+                                onSubmit: this.handleSubmit
                             },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10_react_material_ui_form_validator__["TextValidator"], {
                                 label: 'Github Repo URL',
@@ -73379,7 +73393,10 @@ var FormDialog = function (_Component) {
                                 validators: ['isURL'],
                                 errorMessages: ['Enter github repo url'],
                                 validatorListener: this.validatorListener,
-                                className: 'modalForm'
+                                className: 'modalForm',
+                                ref: function ref(r) {
+                                    return _this3.input = r;
+                                }
 
                             }),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

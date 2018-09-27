@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-class Item extends \Jenssegers\Mongodb\Eloquent\Model
+class Repo extends \Jenssegers\Mongodb\Eloquent\Model
 {
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,6 @@ class Item extends \Jenssegers\Mongodb\Eloquent\Model
 
     public static function getRepoDetails($request)
     {
-        return "fdd";
         $url=$request['url'];
         $client = new Client(); //GuzzleHttp\Client
 //        $result = $client->post($url, [

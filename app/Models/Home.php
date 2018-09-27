@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use http\Env\Request;
-use App\Models\Item;
+use App\Models\Repo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
@@ -16,7 +16,7 @@ class Home extends Model
     public static function index()
     {
         $user = Auth::user();
-        $items = Item::all();
+        $items = Repo::all();
         return view('home', ['items' => $items,'nickname'=> Auth::user()->nickname]);
 
     }
@@ -30,7 +30,7 @@ class Home extends Model
 
         return view('home');
     }
-        $items=Item::all();
+        $items=Repo::all();
         return view('auth.login',['items',$items]);
 
     }
@@ -38,7 +38,7 @@ class Home extends Model
 
     public static function getHomeRepos()
     {
-        return Item::all();
+        return Repo::all();
     }
 
 
@@ -48,7 +48,7 @@ class Home extends Model
         $faker = Faker::create();
         for($i=0;$i < $count;$i++)
         {
-            $item=new Item();
+            $item=new Repo();
             $item->title=$faker->sentence($nbWords = 6, $variableNbWords = true);
             $item->description=$faker->paragraph($nbSentences = 3, $variableNbSentences = true);
             $item->summary=$faker->realText($maxNbChars = 200, $indexSize = 2);
@@ -65,7 +65,7 @@ class Home extends Model
 
     public static function addRepo($request)
     {
-        $item=new Item();
+        $item=new Repo();
         $item->title=$request->get('title');
         $item->summary=$request->get('summary');
         $item->description=$request->get('description');

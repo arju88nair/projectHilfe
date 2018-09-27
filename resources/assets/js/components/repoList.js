@@ -54,18 +54,14 @@ class repoList extends Component {
     }
 
     componentDidMount() {
-
         this.callURL();
-
     }
 
     render() {
         if (this.state.isListLoading) {
-            return Loader
+            return (<Loader/>);
         }
         else {
-
-
             const {classes} = this.props;
             return (
                 <div className={classes.root}>

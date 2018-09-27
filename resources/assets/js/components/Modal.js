@@ -19,7 +19,8 @@ export default class FormDialog extends Component {
             open: false,
 
             url:'',
-            button:true
+            button:true,
+            apiError:true,
 
 
         };
@@ -49,14 +50,19 @@ export default class FormDialog extends Component {
             .then(res => {
                 if(res.data.code === 200)
                 {
-
+alert("SDsdd")
                 }
                 else {
-
+alert("Noooooo")
                 }
                 console.log(res['code']);
                 console.log(res.data.code);
-            })
+            }). catch(err=>{
+                this.setState({apiError:false});
+                console.log(this.state);
+                this.validatorListener(false);
+                console.log(err)
+    })
 
 
 }
@@ -65,9 +71,10 @@ export default class FormDialog extends Component {
     componentDidMount() {
         // custom rule will have name 'isPasswordMatch'
         ValidatorForm.addValidationRule('isURL', (value) => {
-            if (value.match(/https\:\/\/github\.com/)) {
+            if (value.match(/https\:\/\/github\.com/) || this.state.apiError) {
                 return true;
             }
+
             return false;
 
         });
@@ -106,7 +113,7 @@ export default class FormDialog extends Component {
                         {/*</DialogContentText>*/}
                         <ValidatorForm
                             ref="form"
-                            // onSubmit={this.handleSubmit}
+                            onSubmit={this.handleSubmit}
                         >
                             <TextValidator
                                 label="Github Repo URL"
@@ -117,7 +124,7 @@ export default class FormDialog extends Component {
                                 errorMessages={['Enter github repo url']}
                                 validatorListener={this.validatorListener}
                                 className="modalForm"
-
+                                ref={r => (this.input = r)}
 
                             />
                             <Button variant="fab" mini color="primary" aria-label="Add"
@@ -134,38 +141,6 @@ export default class FormDialog extends Component {
                 </Dialog>
 
 
-                {/*<Dialog*/}
-                    {/*open={open}*/}
-                    {/*onClick={this.handleClose}*/}
-                    {/*aria-labelledby="form-dialog-title"*/}
-                {/*>*/}
-                    {/*<DialogTitle id="form-dialog-title">Subscribe</DialogTitle>*/}
-                    {/*<DialogContent>*/}
-                        {/*<DialogContentText>*/}
-                            {/*To subscribe to this website, please enter your email address here. We will send*/}
-                            {/*updates occasionally.*/}
-                        {/*</DialogContentText>*/}
-                        {/*<TextField*/}
-                            {/*autoFocus*/}
-                            {/*margin="dense"*/}
-                            {/*id="name"*/}
-                            {/*label="Email Address"*/}
-                            {/*type="email"*/}
-                            {/*fullWidth*/}
-                            {/*onChange={this.handleChange}*/}
-
-                        {/*/>*/}
-                    {/*</DialogContent>*/}
-                    {/*<DialogActions>*/}
-                        {/*<Button onClick={this.handleClose} color="primary">*/}
-                            {/*Cancel*/}
-                        {/*</Button>*/}
-                        {/*<Button onClick={this.handleClose} color="primary">*/}
-                            {/*Subscribe*/}
-                        {/*</Button>*/}
-                    {/*</DialogActions>*/}
-
-                {/*</Dialog>*/}
             </div>
         );
     }
