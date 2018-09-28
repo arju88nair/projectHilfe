@@ -4,21 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Repo;
 use Illuminate\Http\Request;
-use App\Models\Home;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class apiController extends Controller
 {
+
+    /**
+     * @param Request $request
+     *
+     * API route to insert the repo URL after doing necessary checks for validity or pre-existing
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function getRepoDetails(Request $request)
     {
         $request = parse_url($request['git']);
         $path = $request["path"];
         $parsedDetails = rtrim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $path), '/');
-        $client = new Client(); //GuzzleHttp\Client        $url='https://api.github.com/repos'.$parsedDetails;
-//        $url='https://api.github.com/repos'.$parsedDetails;
+        $url='https://api.github.com/repos'.$parsedDetails;
         $url = 'https://api.github.com/repos/arju88nair/FuberApi';
 
         $ch = curl_init();
@@ -29,13 +33,28 @@ class apiController extends Controller
         $data = curl_exec($ch);
         curl_close($ch);
         $data = json_decode($data, true);
+
+
         if (array_key_exists('message', $data)) {
-            return response()->json(['message' => 'error'], 401);
+            return response()->json(['message' => 'Not a proper repo URL','status'=>Response::$statusTexts['400']], Response::HTTP_BAD_REQUEST);
         }
+
+
         $data=(object)$data;
+
+        $repo=Repo::where('repoID', $data->id)->first();
+        if($repo)
+        {
+            return response()->json(['message' => 'Repository already exists','status'=>Response::$statusTexts['400']], Response::HTTP_BAD_REQUEST);
+
+        }
+
+
         $repo= new Repo();
         $repo->title=$data->name;
+        $repo->repoID=$data->id;
         $repo->username=$data->owner['login'];
+        $repo->ownerID=$data->owner['id'];
         $repo->avatar_url=$data->owner['avatar_url'];
         $repo->url=$data->html_url;
         $repo->description=$data->description;
@@ -45,29 +64,12 @@ class apiController extends Controller
         $repo->language=$data->language;
         $repo->forks=$data->forks;
         $repo->stargazers_count=$data->stargazers_count;
-        return $repo->save();
+        $repo->status=1;
+        $repo->save();
 
-
-        return response()->json(['message' => $repo], 200);
-
-
+        return response()->json(['message' => $repo,'status'=>Response::$statusTexts['200']], Response::HTTP_OK);
     }
 
-    public function login(Request $request)
-    {
-        $user = $request->user();
 
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
-
-        $token->save();
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ]);
-    }
 
 }

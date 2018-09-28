@@ -1,4 +1,4 @@
-import React ,{Component} from 'react';
+import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,20 +17,14 @@ export default class FormDialog extends Component {
 
         this.state = {
             open: false,
-
-            url:'',
-            button:true,
-            apiError:true,
-
-
+            url: '',
+            button: true,
         };
-        this.handleClose=this.handleClose.bind(this);
-        this.handleChange=this.handleChange.bind(this);
-        this.validatorListener=this.validatorListener.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.validatorListener = this.validatorListener.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-
 
 
     handleClose() {
@@ -38,56 +32,44 @@ export default class FormDialog extends Component {
     }
 
     handleChange = event => {
-        this.setState({ url: event.target.value });
+        this.setState({url: event.target.value});
     };
 
 
-    handleSubmit=event=>
-    {
-        let URL='api/getRepoDetails';
-        let git=this.state.url;
-        axios.post(URL, { git })
+    handleSubmit = event => {
+        let URL = 'api/getRepoDetails';
+        let git = this.state.url;
+        axios.post(URL, {git})
             .then(res => {
-                if(res.data.code === 200)
-                {
-alert("SDsdd")
-                }
-                else {
-alert("Noooooo")
-                }
+
                 console.log(res['code']);
                 console.log(res.data.code);
-            }). catch(err=>{
-                this.setState({apiError:false});
-                console.log(this.state);
-                this.validatorListener(false);
-                console.log(err)
-    })
+            }).catch(err => {
 
+            console.log(err)
+        })
 
-}
+    };
 
 
     componentDidMount() {
-        // custom rule will have name 'isPasswordMatch'
+        // custom rule will have name 'isURL'
         ValidatorForm.addValidationRule('isURL', (value) => {
             if (value.match(/https\:\/\/github\.com/) || this.state.apiError) {
                 return true;
             }
-
             return false;
 
         });
-    }
+    };
 
 
     validatorListener(result) {
-        if(result)
-        {
+        if (result) {
             this.setState({button: false});
 
         }
-        else{
+        else {
             this.setState({button: true});
 
         }
@@ -108,8 +90,8 @@ alert("Noooooo")
                     <DialogTitle id="form-dialog-title">Create your space</DialogTitle>
                     <DialogContent>
                         {/*<DialogContentText>*/}
-                            {/*To subscribe to this website, please enter your email address here. We will send*/}
-                            {/*updates occasionally.*/}
+                        {/*To subscribe to this website, please enter your email address here. We will send*/}
+                        {/*updates occasionally.*/}
                         {/*</DialogContentText>*/}
                         <ValidatorForm
                             ref="form"
@@ -128,8 +110,8 @@ alert("Noooooo")
 
                             />
                             <Button variant="fab" mini color="primary" aria-label="Add"
-                                    disabled={this.state.button} onClick={this.handleSubmit} >
-                                <Icon >send</Icon>
+                                    disabled={this.state.button} onClick={this.handleSubmit}>
+                                <Icon>send</Icon>
                             </Button>
                         </ValidatorForm>
                     </DialogContent>
