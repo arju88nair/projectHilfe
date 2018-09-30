@@ -23,7 +23,6 @@ class apiController extends Controller
         $path = $request["path"];
         $parsedDetails = rtrim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $path), '/');
         $url='https://api.github.com/repos'.$parsedDetails;
-        $url = 'https://api.github.com/repos/arju88nair/FuberApi';
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('User-Agent: Nair'));
@@ -34,9 +33,10 @@ class apiController extends Controller
         curl_close($ch);
         $data = json_decode($data, true);
 
+        return response()->json(['message' => 'Not a proper repo URL','status'=>Response::$statusTexts['400'],'code'=>Response::HTTP_BAD_REQUEST], Response::HTTP_OK);
 
         if (array_key_exists('message', $data)) {
-            return response()->json(['message' => 'Not a proper repo URL','status'=>Response::$statusTexts['400']], Response::HTTP_BAD_REQUEST);
+            return response()->json(['message' => 'Not a proper repo URL','status'=>Response::$statusTexts['400'],'code'=>Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
         }
 
 
@@ -45,7 +45,7 @@ class apiController extends Controller
         $repo=Repo::where('repoID', $data->id)->first();
         if($repo)
         {
-            return response()->json(['message' => 'Repository already exists','status'=>Response::$statusTexts['400']], Response::HTTP_BAD_REQUEST);
+            return response()->json(['message' => 'Repository already exists','status'=>Response::$statusTexts['400'],'code'=>Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
 
         }
 
@@ -64,10 +64,10 @@ class apiController extends Controller
         $repo->language=$data->language;
         $repo->forks=$data->forks;
         $repo->stargazers_count=$data->stargazers_count;
-        $repo->status=1;
+        $repo->status='In Progress';
         $repo->save();
 
-        return response()->json(['message' => $repo,'status'=>Response::$statusTexts['200']], Response::HTTP_OK);
+        return response()->json(['message' => $repo,'status'=>Response::$statusTexts['200'],'code'=>Response::HTTP_OK], Response::HTTP_OK);
     }
 
 

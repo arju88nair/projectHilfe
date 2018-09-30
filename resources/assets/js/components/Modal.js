@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import axios from 'axios';
 import Icon from '@material-ui/core/Icon';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import Snackbar from '@material-ui/core/Snackbar';
+import CustomizedSnackbars from './CommonSnackbar'
+
 
 export default class FormDialog extends Component {
     constructor(props) {
@@ -19,6 +20,9 @@ export default class FormDialog extends Component {
             open: false,
             url: '',
             button: true,
+            openSnack:false,
+            vertical: 'top',
+            horizontal: 'center',
         };
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -41,13 +45,18 @@ export default class FormDialog extends Component {
         let git = this.state.url;
         axios.post(URL, {git})
             .then(res => {
+                if(res.body.code == 400)
+                {
 
+                }else{
+
+                }
                 console.log(res['code']);
                 console.log(res.data.code);
             }).catch(err => {
-
-            console.log(err)
+            console.log(err.body)
         })
+
 
     };
 
@@ -78,10 +87,20 @@ export default class FormDialog extends Component {
 
     render() {
         const open = this.props.open;
-        const {url} = this.state;
+        const { vertical, horizontal, openSnack ,url} = this.state;
+
 
         return (
             <div>
+                <Snackbar
+                    anchorOrigin={{ vertical, horizontal }}
+                    open={openSnack}
+                    onClose={this.handleClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">I love snacks</span>}
+                />
                 <Dialog
                     open={open}
                     onClose={this.handleClose}
