@@ -33,7 +33,6 @@ class apiController extends Controller
         curl_close($ch);
         $data = json_decode($data, true);
 
-        return response()->json(['message' => 'Not a proper repo URL','status'=>Response::$statusTexts['400'],'code'=>Response::HTTP_BAD_REQUEST], Response::HTTP_OK);
 
         if (array_key_exists('message', $data)) {
             return response()->json(['message' => 'Not a proper repo URL','status'=>Response::$statusTexts['400'],'code'=>Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
