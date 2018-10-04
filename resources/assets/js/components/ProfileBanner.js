@@ -11,13 +11,13 @@ class ProfileBanner extends Component {
     constructor(props, context) {
         super(props, context);
 
-
-        this.state = {
-            profile: [],
-            isLoading: false,
-            open: false,
-
-        };
+        //
+        // this.state = {
+        //     profile: [],
+        //     isLoading: false,
+        //     open: false,
+        //
+        // };
         this.toggleModal= this.toggleModal.bind(this);
         this.handleClose= this.handleClose.bind(this);
 
@@ -26,16 +26,16 @@ class ProfileBanner extends Component {
 
     handleClose() {
 
-        this.setState({
-            open: !this.state.open
-        });
+        // this.setState({
+        //     open: !this.state.open
+        // });
     }
 
 
     toggleModal() {
-        this.setState({
-            open: true
-        });
+        // this.setState({
+        //     open: true
+        // });
     }
 
     componentDidMount() {

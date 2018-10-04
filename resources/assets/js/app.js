@@ -8,4 +8,4 @@
 require('./bootstrap');
 
 
-import ProfileBanner from './components/Main';
+import ProfileBanner from './container/Main';
