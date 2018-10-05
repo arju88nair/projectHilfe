@@ -62557,15 +62557,14 @@ var ProfileBanner = function (_Component) {
     function ProfileBanner(props, context) {
         _classCallCheck(this, ProfileBanner);
 
-        //
-        // this.state = {
-        //     profile: [],
-        //     isLoading: false,
-        //     open: false,
-        //
-        // };
         var _this = _possibleConstructorReturn(this, (ProfileBanner.__proto__ || Object.getPrototypeOf(ProfileBanner)).call(this, props, context));
 
+        _this.state = {
+            profile: [],
+            isLoading: false,
+            open: false
+
+        };
         _this.toggleModal = _this.toggleModal.bind(_this);
         _this.handleClose = _this.handleClose.bind(_this);
 
@@ -62576,16 +62575,16 @@ var ProfileBanner = function (_Component) {
         key: 'handleClose',
         value: function handleClose() {
 
-            // this.setState({
-            //     open: !this.state.open
-            // });
+            this.setState({
+                open: !this.state.open
+            });
         }
     }, {
         key: 'toggleModal',
         value: function toggleModal() {
-            // this.setState({
-            //     open: true
-            // });
+            this.setState({
+                open: true
+            });
         }
     }, {
         key: 'componentDidMount',
