@@ -12,13 +12,14 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['middleware' => 'web'], function () {
+Route::post('register', 'API\RegisterController@register');
+
+Route::post('login', 'API\RegisterController@login');
+
+
+
+Route::middleware('auth:api')->group( function () {
+
+    Route::resource('posts', 'API\PostController');
+
 });
-
-Route::get('getHomeRepos', 'HomeController@getHomeRepos');
-Route::get('addRepo', 'HomeController@addRepo');
-
-//Faker route
-Route::get('/faker','HomeController@faker');
-
-Route::post('/search','ApiController@search');
