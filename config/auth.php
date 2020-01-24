@@ -42,16 +42,15 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 
     /*
     |--------------------------------------------------------------------------
     | User Providers
-    |--------------------------------------------------------------------------
+    |-----------------------s---------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
     | users are actually retrieved out of your database or other storage
