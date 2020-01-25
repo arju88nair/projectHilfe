@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 
-use App\User;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -38,9 +38,9 @@ class RegisterController extends BaseController
 
         $validator = Validator::make($request->all(), [
 
-            'type' => 'required',
+            'name' => 'required',
 
-            'description' => 'required',
+            'email' => 'required|email|max:255|unique:users',
 
             'password' => 'required',
 
