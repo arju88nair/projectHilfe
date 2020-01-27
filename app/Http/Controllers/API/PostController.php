@@ -1,21 +1,14 @@
 <?php
 
 
-
 namespace App\Http\Controllers\API;
 
 
-
+use App\Models\Post;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\API\BaseController as BaseController;
-
-use App\Models\Product;
-
 use Illuminate\Support\Facades\Validator;
-
 use App\Http\Resources\Post as PostResource;
-
 
 
 class PostController extends BaseController
@@ -23,37 +16,23 @@ class PostController extends BaseController
 {
 
     /**
-
-     * Display a listing of the resource.
-
-     *
-
-     * @return \Illuminate\Http\Response
-
+     * @return \Illuminate\Http\JsonResponse
      */
 
     public function index()
 
     {
 
-        $Posts = Post::all();
+        $products = Post::all();
 
 
-
-        return $this->sendResponse(PostResource::collection($Posts), 'Posts retrieved successfully.');
+        return $this->sendResponse(PostResource::collection($products), 'Products retrieved successfully.');
 
     }
 
     /**
-
-     * Store a newly created resource in storage.
-
-     *
-
-     * @param  \Illuminate\Http\Request  $request
-
-     * @return \Illuminate\Http\Response
-
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
 
     public function store(Request $request)
@@ -63,92 +42,68 @@ class PostController extends BaseController
         $input = $request->all();
 
 
-
         $validator = Validator::make($input, [
 
             'title' => 'required',
             'description' => 'required',
             'url' => 'required',
+            'gitSource' => 'required',
             'slug' => 'required',
             'category' => 'required',
-            'gitSource' => 'required',
 
         ]);
 
 
-
-        if($validator->fails()){
+        if ($validator->fails()) {
 
             return $this->sendError('Validation Error.', $validator->errors());
 
         }
 
 
-
-        $Post = Post::create($input);
-
+        $product = Post::create($input);
 
 
-        return $this->sendResponse(new PostResource($Post), 'Post created successfully.');
+        return $this->sendResponse(new PostResource($product), 'Post created successfully.');
 
     }
 
 
-
     /**
-
-     * Display the specified resource.
-
-     *
-
-     * @param  int  $id
-
-     * @return \Illuminate\Http\Response
-
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
 
     public function show($id)
 
     {
 
-        $Post = Post::find($id);
+        $product = Post::find($id);
 
 
-
-        if (is_null($Post)) {
+        if (is_null($product)) {
 
             return $this->sendError('Post not found.');
 
         }
 
 
-
-        return $this->sendResponse(new PostResource($Post), 'Post retrieved successfully.');
+        return $this->sendResponse(new PostResource($product), 'Post retrieved successfully.');
 
     }
 
 
-
     /**
-
-     * Update the specified resource in storage.
-
-     *
-
-     * @param  \Illuminate\Http\Request  $request
-
-     * @param  int  $id
-
-     * @return \Illuminate\Http\Response
-
+     * @param Request $request
+     * @param Post $product
+     * @return \Illuminate\Http\JsonResponse
      */
 
-    public function update(Request $request, Post $Post)
+    public function update(Request $request, Post $product)
 
     {
 
         $input = $request->all();
-
 
 
         $validator = Validator::make($input, [
@@ -156,54 +111,42 @@ class PostController extends BaseController
             'title' => 'required',
             'description' => 'required',
             'url' => 'required',
+            'gitSource' => 'required',
             'slug' => 'required',
             'category' => 'required',
-            'gitSource' => 'required',
-
         ]);
 
 
-
-        if($validator->fails()){
+        if ($validator->fails()) {
 
             return $this->sendError('Validation Error.', $validator->errors());
 
         }
 
 
+        $product->name = $input['name'];
 
-        $Post->name = $input['name'];
+        $product->detail = $input['detail'];
 
-        $Post->detail = $input['detail'];
-
-        $Post->save();
-
+        $product->save();
 
 
-        return $this->sendResponse(new PostResource($Post), 'Post updated successfully.');
+        return $this->sendResponse(new PostResource($product), 'Post updated successfully.');
 
     }
 
 
-
     /**
-
-     * Remove the specified resource from storage.
-
-     *
-
-     * @param  int  $id
-
-     * @return \Illuminate\Http\Response
-
+     * @param Post $product
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
 
-    public function destroy(Post $Post)
+    public function destroy(Post $product)
 
     {
 
-        $Post->delete();
-
+        $product->delete();
 
 
         return $this->sendResponse([], 'Post deleted successfully.');
@@ -211,5 +154,3 @@ class PostController extends BaseController
     }
 
 }
-
-
