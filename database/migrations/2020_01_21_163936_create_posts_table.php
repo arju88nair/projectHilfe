@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('url');
             $table->text('description');
-            $table->string('gitSource');s
+            $table->string('gitSource');
             $table->string('slug');
             $table->string('category');
             $table->softDeletes();

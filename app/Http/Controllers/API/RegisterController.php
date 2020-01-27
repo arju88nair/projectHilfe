@@ -1,27 +1,37 @@
 <?php
 
 
+
 namespace App\Http\Controllers\API;
+
 
 
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 
-use App\User;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Validator;
+
+
 
 class RegisterController extends BaseController
 
 {
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+
+     * Register api
+
+     *
+
+     * @return \Illuminate\Http\Response
+
      */
+
     public function register(Request $request)
 
     {
@@ -30,7 +40,7 @@ class RegisterController extends BaseController
 
             'name' => 'required',
 
-            'email' => 'required|email',
+            'email' => 'required|email|max:255|unique:users',
 
             'password' => 'required',
 
@@ -39,11 +49,13 @@ class RegisterController extends BaseController
         ]);
 
 
-        if ($validator->fails()) {
+
+        if($validator->fails()){
 
             return $this->sendError('Validation Error.', $validator->errors());
 
         }
+
 
 
         $input = $request->all();
@@ -52,9 +64,10 @@ class RegisterController extends BaseController
 
         $user = User::create($input);
 
-        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['token'] =  $user->createToken('MyApp')->accessToken;
 
-        $success['name'] = $user->name;
+        $success['name'] =  $user->name;
+
 
 
         return $this->sendResponse($success, 'User register successfully.');
@@ -62,29 +75,37 @@ class RegisterController extends BaseController
     }
 
 
+
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+
+     * Login api
+
+     *
+     * @return \Illuminate\Http\Response
+
      */
 
     public function login(Request $request)
 
     {
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
 
             $user = Auth::user();
 
-            $success['token'] = $user->createToken('MyApp')->accessToken;
+            $success['token'] =  $user->createToken('MyApp')-> accessToken;
 
-            $success['name'] = $user->name;
+            $success['name'] =  $user->name;
+
 
 
             return $this->sendResponse($success, 'User login successfully.');
 
-        } else {
+        }
 
-            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        else{
+
+            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
 
         }
 
