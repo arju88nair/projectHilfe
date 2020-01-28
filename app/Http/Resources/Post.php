@@ -17,11 +17,14 @@ class Post extends JsonResource
         return [
 
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'title' => $this->title,
             'description' => $this->description,
             'gitSource' => $this->gitSource,
             'category' => $this->category,
+            'slug' => $this->slug,
             'url' => $this->url,
+            'tag' => $this->tag,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
 

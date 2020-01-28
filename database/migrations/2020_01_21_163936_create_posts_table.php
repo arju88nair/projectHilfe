@@ -23,6 +23,7 @@ class CreatePostsTable extends Migration
             $table->string('gitSource');
             $table->string('slug');
             $table->string('category');
+            $table->string('tag');
             $table->softDeletes();
             $table->timestamps();
         });
